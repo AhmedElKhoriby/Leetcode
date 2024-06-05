@@ -25,25 +25,21 @@ class Solution
 {
 public:
     vector<string> commonChars(vector<string>& words) {
-    vector<multiset<char>> charSets;
-    for (string word : words) {
-        multiset<char> charSet(word.begin(), word.end());
-        charSets.push_back(charSet);
+        vector<int>freq(26, INT_MAX);
+        for (const string& word : words) {
+            vector<int>current_freq(26, 0);
+            for (const char& ch : word)
+                current_freq[ch - 'a']++;
+            for (char ch = 'a';ch <= 'z';ch++) {
+                freq[ch-'a'] = min(freq[ch-'a'], current_freq[ch-'a']);
+            }
+        }
+        
+        vector<string> ans;
+        for (char ch = 'a';ch <= 'z';ch++) {
+            while(freq[ch-'a']--)
+                ans.push_back(string(1,ch));
+        }
+        return ans;
     }
-    
-    multiset<char> result = charSets[0];
-    for (int i = 1; i < charSets.size(); i++) {
-        multiset<char> temp;
-        set_intersection(result.begin(), result.end(), charSets[i].begin(), charSets[i].end(),
-                         inserter(temp, temp.begin()));
-        result = temp;
-    }
-    
-    vector<string> commonCharacters;
-    for (char c : result) {
-        commonCharacters.push_back(string(1, c));
-    }
-    
-    return commonCharacters;
-}
 };

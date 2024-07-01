@@ -5,12 +5,25 @@ class Solution {
      * @param String $word2
      * @return String
      */
-    function mergeAlternately(string $word1, $word2) {
-        $answer = ""; $i = 0 ; $j = 0;
-        $sz = max(strlen($word1) , strlen($word2));
-        for ($i = 0; $i < $sz; $i++){
-            $answer .= ($word1[$i] ?? '').($word2[$i] ?? '');
+    function mergeAlternately($word1, $word2) {
+        $i = 0;
+        $j = 0;
+        $combined = '';
+        $min = min(strlen($word1), strlen($word2));
+
+        while ($i < $min) {
+            $combined .= $word1[$i];
+            $combined .= $word2[$j];
+            $i++;
+            $j++;
         }
-        return $answer;
+
+        if (strlen($word1) > $min) {
+            $combined .= substr($word1, $i);
+        } else {
+            $combined .= substr($word2, $j);
+        }
+
+        return $combined;
     }
 }

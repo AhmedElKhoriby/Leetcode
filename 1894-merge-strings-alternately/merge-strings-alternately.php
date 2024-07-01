@@ -7,8 +7,8 @@ class Solution {
      */
     function mergeAlternately($word1, $word2) {
         $answer = ""; $i = 0 ; $j = 0;
-        $sz1 = mb_strlen($word1, 'UTF-8');
-        $sz2 = mb_strlen($word2, 'UTF-8');
+        $sz1 = strlen($word1);
+        $sz2 = strlen($word2);
         while ($i < $sz1 && $j < $sz2){
             $answer .= $word1[$i++];
             $answer .= $word2[$j++];

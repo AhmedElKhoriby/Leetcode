@@ -1,21 +1,34 @@
 class Solution {
+private:
+    int convert_transform(const string& s) {
+        int number = 0;
+        int sz = s.size();
+        int sum = 0;
+        for (int i = 0; i < sz; i++) {
+            int number = (s[i] - 'a' + 1);
+            while (number >= 1) {
+                sum += number % 10;
+                number /= 10;
+            }
+        }
+        return sum;
+    }
+
+    int Transform(int number) {
+        int sum = 0;
+        while(number >= 1) {
+            sum += number % 10;
+            number /= 10;
+        }
+        return sum;
+    }
+
 public:
     int getLucky(string s, int k) {
-        // Convert each character in the string to its corresponding numeric value
-        string number = "";
-        for (char x : s) {
-            number += to_string(x - 'a' + 1);
+        int newS = convert_transform(s);
+        for (int i = 0; i < k-1; i++) {
+            newS = Transform(newS);
         }
-        
-        // Perform the transformation `k` times
-        while (k > 0) {
-            int temp = 0;
-            for (char x : number) {
-                temp += x - '0';  // Sum the digits of the current number
-            }
-            number = to_string(temp);  // Convert the sum back to a string
-            k--;
-        }
-        return stoi(number);  // Return the final result as an integer
+        return newS;
     }
 };
